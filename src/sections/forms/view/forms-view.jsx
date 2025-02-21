@@ -441,7 +441,7 @@ export default function FormPage() {
                           status={row?.status}
                           pendingWith={
                             row?.requestDetails?.assignedEmail.length > 0
-                              ? "N/A"
+                              ? row?.requestDetails?.assignedEmail.length> 0 ? row?.requestDetails?.assignedEmail[0]?.email : "N/A"
                               : "N/A"
                           }
                           // pendingWith='N/A'

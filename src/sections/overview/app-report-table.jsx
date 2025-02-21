@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
   MenuItem,
   Button,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { userRequest } from "src/requestMethod";
@@ -25,49 +26,63 @@ const columns = [
     textColor: "#FFF",
   },
   { id: "today", label: "Today", color: "#FFCC33", textColor: "#FFF" },
-  { id: "oneDay", label: "1 Day", color: "#FFAB00", textColor: "#FFF" },
-  { id: "twoDay", label: "2 Day", color: "#FF9933", textColor: "#FFF" },
-  { id: "threeDay", label: "3 Day", color: "#FF6600", textColor: "#FFF" },
-  { id: "fourDay", label: "4 Day", color: "#FF3300", textColor: "#FFF" },
-  { id: "fiveDay", label: "5 Day", color: "#CC0000", textColor: "#FFF" },
-  { id: "moreThanFive", label: ">5 Day", color: "#990000", textColor: "#FFF" },
-];
-
-const rows = [
-  { category: "Comm-1 (Verify Doc and Data)" },
-  { category: "Area Head" },
-  { category: "ZSH" },
-  { category: "RM" },
-  { category: "Comm-2 (Order Creation)" },
-  { category: "SCM" },
+  { id: "1 day", label: "1 Day", color: "#FFAB00", textColor: "#FFF" },
+  { id: "2 days", label: "2 Day", color: "#FF9933", textColor: "#FFF" },
+  { id: "3 days", label: "3 Day", color: "#FF6600", textColor: "#FFF" },
+  { id: "4 days", label: "4 Day", color: "#FF3300", textColor: "#FFF" },
+  { id: "5 days", label: "5 Day", color: "#CC0000", textColor: "#FFF" },
+  { id: ">5 days", label: ">5 Day", color: "#990000", textColor: "#FFF" },
 ];
 
 const ReportTable = () => {
-  const [region, setRegion] = useState("East");
-  const pendingRequests = { North: 42, South: 569, East: 69, West: 415 };
-  const totalPending = 1095;
+  const [region, setRegion] = useState("South");
+  const [reportData, setReportData] = useState({});
+  const [totalPendingRequests, setTotalPendingRequests] = useState(0);
+  const [regionCount, setRegionCount] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleExport = async () => {
     try {
-      // const response = await userRequest.get("/admin/exportFormsToExcel", {
-      //   responseType: "blob",
-      // });
+      const response = await userRequest.get("/admin/getExcelExport", {
+        responseType: "blob",
+      });
 
-      // const blob = new Blob([response.data], {
-      //   type: "application/octet-stream",
-      // });
-      // const url = URL.createObjectURL(blob);
-      // const a = document.createElement("a");
-      // a.href = url;
-      // a.download = "Request.xlsx";
-      // document.body.appendChild(a);
-      // a.click();
-      // document.body.removeChild(a);
-      console.log("Exporting data");
+      const blob = new Blob([response.data], {
+        type: "application/octet-stream",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Region-Report.xlsx";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     } catch (error) {
       toast.error("Error exporting data. Please try again.");
     }
   };
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await userRequest.get("/admin/getCharts");
+      if (response.data.success) {
+        setReportData(response.data.data.result);
+        setTotalPendingRequests(response.data.data.totalPendingRequests);
+        setRegionCount(response.data.data.regionCount);
+      }
+    } catch (error) {
+      console.log("error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const currentRegionData = reportData[region] || {};
 
   return (
     <Paper sx={{ p: 2, mt: 4, borderRadius: 2, width: "100%" }}>
@@ -81,24 +96,13 @@ const ReportTable = () => {
       >
         <div>
           <Typography variant="body2">TAT: Pending Requests</Typography>
-          <Typography variant="body2" sx={{ color: "red" }}>Total: {totalPending}</Typography>
+          <Typography variant="body2" sx={{ color: "red" }}>
+            Total: {totalPendingRequests}
+          </Typography>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            // flexDirection: "column",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <Typography variant="body2" color="#000">
               Region:
             </Typography>
@@ -109,18 +113,14 @@ const ReportTable = () => {
               sx={{
                 borderBottom: "1px solid #000",
                 borderRadius: "0px",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
+                "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+                "&:hover .MuiOutlinedInput-notchedOutline": { border: "none" },
                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                   border: "none",
                 },
               }}
             >
-              {Object.keys(pendingRequests).map((region) => (
+              {Object.keys(regionCount).map((region) => (
                 <MenuItem key={region} value={region}>
                   {region}
                 </MenuItem>
@@ -129,7 +129,7 @@ const ReportTable = () => {
           </div>
 
           <Typography variant="caption" color="#000">
-            Pending Requests: <strong>{pendingRequests[region]}</strong>
+            Pending Requests: <strong>{regionCount[region] || 0}</strong>
           </Typography>
         </div>
 
@@ -146,69 +146,97 @@ const ReportTable = () => {
           />
         </Button>
       </div>
-
-      <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {columns.map(({ id, label, color, textColor }) => (
-                <TableCell
-                  key={id}
-                  align="center"
-                  sx={{
-                    backgroundColor: color || "#F0F0F0",
-                    color: textColor || "#000",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index) => (
-              <TableRow key={index} hover>
-                {columns.map(({ id }) => (
-                  <TableCell key={id} align="center">
-                    {row[id] || "-"}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginTop: "8px",
-          fontSize: "0.875rem",
-          color: "#666",
-          gap: "8px",
-        }}
-      >
-        <span style={{ color: "#1777ED" }}>
-          North: <strong style={{ color: "#000" }}>42</strong>
-        </span>{" "}
-        |
-        <span style={{ color: "#28A745" }}>
-          {" "}
-          South: <strong style={{ color: "#000" }}>569</strong>
-        </span>{" "}
-        |
-        <span style={{ color: "#FFC107" }}>
-          {" "}
-          East: <strong style={{ color: "#000" }}>69</strong>
-        </span>{" "}
-        |
-        <span style={{ color: "#DC3545" }}>
-          {" "}
-          West: <strong style={{ color: "#000" }}>415</strong>
-        </span>
-      </div>
+      {loading ? (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "16px" }}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <>
+          <TableContainer
+            component={Paper}
+            sx={{ boxShadow: 3, borderRadius: 2 }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {columns.map(({ id, label, color, textColor }) => (
+                    <TableCell
+                      key={id}
+                      align="center"
+                      sx={{
+                        backgroundColor: color || "#F0F0F0",
+                        color: textColor || "#000",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.keys(currentRegionData).length > 0 ? (
+                  Object.entries(currentRegionData).map(
+                    ([category, values], index) => (
+                      <TableRow key={index} hover>
+                        <TableCell align="center">{category}</TableCell>
+                        {columns.slice(1).map(({ id }) => (
+                          <TableCell key={id} align="center">
+                            {values[id] !== undefined ? values[id] : "-"}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    )
+                  )
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} align="center">
+                      No data available for the selected region.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "8px",
+              fontSize: "0.875rem",
+              color: "#666",
+              gap: "8px",
+            }}
+          >
+            <span style={{ color: "#1777ED" }}>
+              North:{" "}
+              <strong style={{ color: "#000" }}>
+                {regionCount.North || 0}
+              </strong>
+            </span>{" "}
+            |
+            <span style={{ color: "#28A745" }}>
+              {" "}
+              South:{" "}
+              <strong style={{ color: "#000" }}>
+                {regionCount.South || 0}
+              </strong>
+            </span>{" "}
+            |
+            <span style={{ color: "#FFC107" }}>
+              {" "}
+              East:{" "}
+              <strong style={{ color: "#000" }}>{regionCount.East || 0}</strong>
+            </span>{" "}
+            |
+            <span style={{ color: "#DC3545" }}>
+              {" "}
+              West:{" "}
+              <strong style={{ color: "#000" }}>{regionCount.West || 0}</strong>
+            </span>
+          </div>
+        </>
+      )}
     </Paper>
   );
 };
