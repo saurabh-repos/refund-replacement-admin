@@ -124,42 +124,42 @@ export default function HierarchyView() {
     { id: 'totalRecipients', label: 'Total Recipients', minWidth: 150 },
 
     // Recipient 1
-    { id: 'recipientOne', label: 'Recipient 1', minWidth: 140 },
+    { id: 'recipientOne', label: 'Recipient 1', minWidth: 160 },
     { id: 'recipientOneStatus', label: 'Recipient 1 Status', minWidth: 160 },
     { id: 'recipientOneIssueDate', label: 'Recipient 1 Issue Date', minWidth: 140 },
     { id: 'recipientOneResponseDate', label: 'Recipient 1 Response Date', minWidth: 140 },
     { id: 'recipientOneComment', label: 'Recipient 1 Comment', minWidth: 130 },
 
     // Recipient 2
-    { id: 'recipientTwo', label: 'Recipient 2', minWidth: 120 },
+    { id: 'recipientTwo', label: 'Recipient 2', minWidth: 160 },
     { id: 'recipientTwoStatus', label: 'Recipient 2 Status', minWidth: 160 },
     { id: 'recipientTwoIssueDate', label: 'Recipient 2 Issue Date', minWidth: 120 },
     { id: 'recipientTwoResponseDate', label: 'Recipient 2 Response Date', minWidth: 130 },
     { id: 'recipientTwoComment', label: 'Recipient 2 Comment', minWidth: 180 },
 
     // Recipient 3
-    { id: 'recipientThree', label: 'Recipient 3', minWidth: 140 },
+    { id: 'recipientThree', label: 'Recipient 3', minWidth: 160 },
     { id: 'recipientThreeStatus', label: 'Recipient 3 Status', minWidth: 160 },
     { id: 'recipientThreeIssueDate', label: 'Recipient 3 Issue Date', minWidth: 190 },
     { id: 'recipientThreeResponseDate', label: 'Recipient 3 Response Date', minWidth: 200 },
     { id: 'recipientThreeComment', label: 'Recipient 3 Comment', minWidth: 180 },
 
     // Recipient 4
-    { id: 'recipientFour', label: 'Recipient 4', minWidth: 140 },
+    { id: 'recipientFour', label: 'Recipient 4', minWidth: 160 },
     { id: 'recipientFourStatus', label: 'Recipient 4 Status', minWidth: 160 },
     { id: 'recipientFourIssueDate', label: 'Recipient 4 Issue Date', minWidth: 190 },
     { id: 'recipientFourResponseDate', label: 'Recipient 4 Response Date', minWidth: 220 },
     { id: 'recipientFourComment', label: 'Recipient 4 Comment', minWidth: 180 },
 
     // Recipient 5
-    { id: 'recipientFive', label: 'Recipient 5', minWidth: 140 },
+    { id: 'recipientFive', label: 'Recipient 5', minWidth: 160 },
     { id: 'recipientFiveStatus', label: 'Recipient 5 Status', minWidth: 160 },
     { id: 'recipientFiveIssueDate', label: 'Recipient 5 Issue Date', minWidth: 190 },
     { id: 'recipientFiveResponseDate', label: 'Recipient 5 Response Date', minWidth: 220 },
     { id: 'recipientFiveComment', label: 'Recipient 5 Comment', minWidth: 180 },
 
     // Recipient 6
-    { id: 'recipientSix', label: 'Recipient 6', minWidth: 140 },
+    { id: 'recipientSix', label: 'Recipient 6', minWidth: 160 },
     { id: 'recipientSixStatus', label: 'Recipient 6 Status', minWidth: 160 },
     { id: 'recipientSixIssueDate', label: 'Recipient 6 Issue Date', minWidth: 190 },
     { id: 'recipientSixResponseDate', label: 'Recipient 6 Response Date', minWidth: 220 },
