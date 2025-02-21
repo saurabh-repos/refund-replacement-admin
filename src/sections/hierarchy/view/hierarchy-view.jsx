@@ -16,6 +16,7 @@ import { applyFilter, getComparator } from 'src/utils/utils';
 import excel from '../../../../public/assets/excel.svg';
 import TableNoData from '../table-no-data';
 import { userRequest } from 'src/requestMethod';
+import ApproversModal from '../parallel-approvers-modal';
 
 export default function HierarchyView() {
   const [data, setData] = useState([]);
@@ -30,6 +31,19 @@ export default function HierarchyView() {
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('createdAt');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [approversEmails, setApproversEmails] = useState([]);
+
+
+  const handleOpenModal = (emails) => {
+    setApproversEmails(emails);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setApproversEmails([]);
+  };
 
   const getData = async () => {
     try {
@@ -221,38 +235,38 @@ export default function HierarchyView() {
                         createdAt={row?.createdAt}
                         slNo={row?.slNo}
                         status={row?.status}
-                        requesterEmail={row?.step1?.email}
+                        requesterEmail={row?.step1.length > 1 ? <span  onClick={() => handleOpenModal(row.step1.map((item) => item.email))}>Parallel Approvers</span> : row?.step1[0]?.email}
                         totalRecipients={row?.totalRecipients - 1}
-                        recipientOne={row?.step1?.email}
-                        recipientOneStatus={row?.step1?.status}
-                        recipientOneIssueDate={row?.step1?.createdAt}
-                        recipientOneResponseDate={row?.step1?.updatedAt}
-                        recipientOneComment={row?.step1?.comment}
-                        recipientTwo={row?.step2?.email}
-                        recipientTwoStatus={row?.step2?.status}
-                        recipientTwoIssueDate={row?.step2?.createdAt}
-                        recipientTwoResponseDate={row?.step2?.updatedAt}
-                        recipientTwoComment={row?.step2?.comment}
-                        recipientThree={row?.step3?.email}
-                        recipientThreeStatus={row?.step3?.status}
-                        recipientThreeIssueDate={row?.step3?.createdAt}
-                        recipientThreeResponseDate={row?.step3?.updatedAt}
-                        recipientThreeComment={row?.step3?.comment}
-                        recipientFour={row?.step4?.email}
-                        recipientFourStatus={row?.step4?.status}
-                        recipientFourIssueDate={row?.step4?.createdAt}
-                        recipientFourResponseDate={row?.step4?.updatedAt}
-                        recipientFourComment={row?.step4?.comment}
-                        recipientFive={row?.step5?.email}
-                        recipientFiveStatus={row?.step5?.status}
-                        recipientFiveIssueDate={row?.step5?.createdAt}
-                        recipientFiveResponseDate={row?.step5?.updatedAt}
-                        recipientFiveComment={row?.step5?.comment}
-                        recipientSix={row?.step6?.email}
-                        recipientSixStatus={row?.step6?.status}
-                        recipientSixIssueDate={row?.step6?.createdAt}
-                        recipientSixResponseDate={row?.step6?.updatedAt}
-                        recipientSixComment={row?.step6?.comment}
+                        recipientOne={row?.step1.length > 1 ? <span  onClick={() => handleOpenModal(row.step1.map((item) => item.email))}>Parallel Approvers</span> : row?.step1[0]?.email}
+                        recipientOneStatus={row?.step1[0]?.status}
+                        recipientOneIssueDate={row?.step1[0]?.createdAt}
+                        recipientOneResponseDate={row?.step1[0]?.updatedAt}
+                        recipientOneComment={row?.step1[0]?.comment}
+                        recipientTwo={row?.step2.length > 1 ? <span  onClick={() => handleOpenModal(row.step2.map((item) => item.email))}>Parallel Approvers</span> : row?.step2[0]?.email}
+                        recipientTwoStatus={row?.step2[0]?.status}
+                        recipientTwoIssueDate={row?.step2[0]?.createdAt}
+                        recipientTwoResponseDate={row?.step2[0]?.updatedAt}
+                        recipientTwoComment={row?.step2[0]?.comment}
+                        recipientThree={row?.step3.length > 1 ? <span  onClick={() => handleOpenModal(row.step3.map((item) => item.email))}>Parallel Approvers</span> : row?.step3[0]?.email}
+                        recipientThreeStatus={row?.step3[0]?.status}
+                        recipientThreeIssueDate={row?.step3[0]?.createdAt}
+                        recipientThreeResponseDate={row?.step3[0]?.updatedAt}
+                        recipientThreeComment={row?.step3[0]?.comment}
+                        recipientFour={row?.step4.length > 1 ? <span  onClick={() => handleOpenModal(row.step4.map((item) => item.email))}>Parallel Approvers</span> : row?.step4[0]?.email}
+                        recipientFourStatus={row?.step4[0]?.status}
+                        recipientFourIssueDate={row?.step4[0]?.createdAt}
+                        recipientFourResponseDate={row?.step4[0]?.updatedAt}
+                        recipientFourComment={row?.step4[0]?.comment}
+                        recipientFive={row?.step5[0]?.email}
+                        recipientFiveStatus={row?.step5.length > 1 ? <span  onClick={() => handleOpenModal(row.step5.map((item) => item.email))}>Parallel Approvers</span> : row?.step5[0]?.status}
+                        recipientFiveIssueDate={row?.step5[0]?.createdAt}
+                        recipientFiveResponseDate={row?.step5[0]?.updatedAt}
+                        recipientFiveComment={row?.step5[0]?.comment}
+                        recipientSix={row?.step6.length > 1 ? <span  onClick={() => handleOpenModal(row.step6.map((item) => item.email))}>Parallel Approvers</span> : row?.step6[0]?.email}
+                        recipientSixStatus={row?.step6[0]?.status}
+                        recipientSixIssueDate={row?.step6[0]?.createdAt}
+                        recipientSixResponseDate={row?.step6[0]?.updatedAt}
+                        recipientSixComment={row?.step6[0]?.comment}
 
                         // onClick={() => {
                         //   setSelectedRowData(row);
@@ -265,6 +279,7 @@ export default function HierarchyView() {
                 </TableBody>
               </Table>
             </TableContainer>
+            
           )}
         </Scrollbar>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -281,6 +296,7 @@ export default function HierarchyView() {
           />
         </div>
       </Card>
+       <ApproversModal open={modalOpen} handleClose={handleCloseModal} emails={approversEmails} />
     </Container>
   );
 }

@@ -46,11 +46,11 @@ export default function RequestModal({ open, onClose, rowData, getRequestData })
 
   const getStatusStyle = (status) => {
     switch (status.toLowerCase()) {
-      case 'approve':
+      case 'approved':
         return { color: 'green', fontWeight: 'bold' };
       case 'pending':
         return { color: 'orange', fontWeight: 'bold' };
-      case 'decline':
+      case 'declined':
         return { color: 'red', fontWeight: 'bold' };
       default:
         return { color: 'gray', fontWeight: 'bold' };
@@ -59,9 +59,9 @@ export default function RequestModal({ open, onClose, rowData, getRequestData })
 
   const formatStatus = (status) => {
     switch (status.toLowerCase()) {
-      case 'approve':
+      case 'approved':
         return 'Approved';
-      case 'decline':
+      case 'declined':
         return 'Declined';
       case 'pending':
         return 'Pending';
@@ -72,40 +72,41 @@ export default function RequestModal({ open, onClose, rowData, getRequestData })
 
   const renderSteps = (data) => {
     return Object.keys(data)
-      .filter((key) => key.startsWith('step'))
-      .sort((a, b) => a.localeCompare(b))
-      .map((stepKey, index) => {
-        const stepData = data[stepKey];
-        return (
-          <tr style={{ borderBottom: '1px solid #aeaeae' }} key={index}>
-            <td style={{ padding: '8px', textAlign: 'center' }}>{stepData.email}</td>
-            <td style={{ padding: '8px', textAlign: 'center' }}>
-              {stepData.createdAt ? fDate(stepData.created) : 'N/A'}
+      .filter((key) => key.startsWith("step"))
+      .sort((a, b) => parseInt(a.replace("step", ""), 10) - parseInt(b.replace("step", ""), 10))
+      .map((stepKey) => {
+        const stepDataArray = data[stepKey];
+  
+        return stepDataArray.map((stepData, index) => (
+          <tr style={{ borderBottom: "1px solid #aeaeae" }} key={`${stepKey}-${index}`}>
+            <td style={{ padding: "8px", textAlign: "center" }}>{stepData.email}</td>
+            <td style={{ padding: "8px", textAlign: "center" }}>
+              {stepData.createdAt ? fDate(stepData.createdAt) : "N/A"}
             </td>
-            <td style={{ padding: '8px', textAlign: 'center' }}>
-              {stepData.status === 'Pending' ? 'N/A' : fDate(stepData.updatedAt)}
+            <td style={{ padding: "8px", textAlign: "center" }}>
+              {stepData.status === "Pending" ? "N/A" : fDate(stepData.updatedAt)}
             </td>
-            <td style={{ padding: '8px', textAlign: 'center', ...getStatusStyle(stepData.status) }}>
-              {formatStatus(stepData.status || 'Pending')}
+            <td style={{ padding: "8px", textAlign: "center", ...getStatusStyle(stepData.status) }}>
+              {formatStatus(stepData.status || "Pending")}
             </td>
             <td
               style={{
-                padding: '8px',
-                textAlign: 'center',
-                maxWidth: '30dvw',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
+                padding: "8px",
+                textAlign: "center",
+                maxWidth: "30dvw",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
               }}
               title={stepData.comment}
             >
-              {stepData.comment ?? 'N/A'}
+              {stepData.comment ?? "N/A"}
             </td>
           </tr>
-        );
+        ));
       });
   };
-
+  
   return (
     <div>
       <Modal

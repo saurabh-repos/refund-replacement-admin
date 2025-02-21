@@ -19,7 +19,7 @@ const statusColors = {
 
 export default function FormTableRow({
   createdAt,
-  initiaterId,
+  initiatorId,
   slNo,
   employeeCode,
   // employeeName,
@@ -87,7 +87,7 @@ export default function FormTableRow({
         <TableCell onClick={onClick} sx={{ cursor: 'pointer' }}>
           {slNo}
         </TableCell>
-        <TableCell>{initiaterId}</TableCell>
+        <TableCell>{initiatorId}</TableCell>
         <TableCell>{employeeCode}</TableCell>
         {/* <TableCell>{employeeName}</TableCell> */}
         <TableCell>{complainNo}</TableCell>
@@ -159,7 +159,7 @@ export default function FormTableRow({
 
 FormTableRow.propTypes = {
   createdAt: PropTypes.string,
-  initiaterId: PropTypes.string,
+  initiatorId: PropTypes.string,
   slNo: PropTypes.string,
   customerCode: PropTypes.string,
   customerCode1: PropTypes.string,
