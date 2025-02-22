@@ -103,15 +103,15 @@ const ReportTable = () => {
 
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body2" color="#000">
+            {/* <Typography variant="body2" color="#000">
               Region:
-            </Typography>
+            </Typography> */}
             <Select
               value={region}
               onChange={(e) => setRegion(e.target.value)}
               size="small"
               sx={{
-                borderBottom: "1px solid #000",
+                // borderBottom: "1px solid #000",
                 borderRadius: "0px",
                 "& .MuiOutlinedInput-notchedOutline": { border: "none" },
                 "&:hover .MuiOutlinedInput-notchedOutline": { border: "none" },
