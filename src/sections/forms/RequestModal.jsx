@@ -70,24 +70,91 @@ export default function RequestModal({ open, onClose, rowData, getRequestData })
     }
   };
 
+  // const renderSteps = (data) => {
+  //   return Object.keys(data)
+  //     .filter((key) => key.startsWith("step"))
+  //     .sort((a, b) => parseInt(a.replace("step", ""), 10) - parseInt(b.replace("step", ""), 10))
+  //     .map((stepKey) => {
+  //       const stepDataArray = data[stepKey];
+  
+  //       return stepDataArray.map((stepData, index) => (
+  //         <tr style={{ borderBottom: "1px solid #aeaeae" }} key={`${stepKey}-${index}`}>
+  //           <td style={{ padding: "8px", textAlign: "center" }}>{stepData.email}</td>
+  //           <td style={{ padding: "8px", textAlign: "center" }}>
+  //             {stepData.createdAt ? fDate(stepData.createdAt) : "N/A"}
+  //           </td>
+  //           <td style={{ padding: "8px", textAlign: "center" }}>
+  //             {stepData.status === "Pending" ? "N/A" : fDate(stepData.updatedAt)}
+  //           </td>
+  //           <td style={{ padding: "8px", textAlign: "center", ...getStatusStyle(stepData.status) }}>
+  //             {formatStatus(stepData.status || "Pending")}
+  //           </td>
+  //           <td
+  //             style={{
+  //               padding: "8px",
+  //               textAlign: "center",
+  //               maxWidth: "30dvw",
+  //               overflow: "hidden",
+  //               whiteSpace: "nowrap",
+  //               textOverflow: "ellipsis",
+  //             }}
+  //             title={stepData.comment}
+  //           >
+  //             {stepData.comment ?? "N/A"}
+  //           </td>
+  //         </tr>
+  //       ));
+  //     });
+  // };
+
   const renderSteps = (data) => {
     return Object.keys(data)
-      .filter((key) => key.startsWith("step"))
+      .filter((key) => key.startsWith("step") && data[key]?.length > 0) 
       .sort((a, b) => parseInt(a.replace("step", ""), 10) - parseInt(b.replace("step", ""), 10))
       .map((stepKey) => {
         const stepDataArray = data[stepKey];
   
-        return stepDataArray.map((stepData, index) => (
-          <tr style={{ borderBottom: "1px solid #aeaeae" }} key={`${stepKey}-${index}`}>
-            <td style={{ padding: "8px", textAlign: "center" }}>{stepData.email}</td>
+        const firstApproved = stepDataArray.find((item) => item.status === "Approved");
+        const firstDeclined = stepDataArray.find((item) => item.status === "Declined");
+        const firstPending = stepDataArray.find((item) => item.status === "Pending");
+  
+        // const allPendingEmails = stepDataArray
+        //   .filter((item) => item.status === "Pending")
+        //   .map((item) => item.email)
+        //   .join(", ");
+  
+        const allPendingEmails = stepDataArray
+        .filter((item) => item.status === "Pending")
+        .map((item) => <div key={item.email}>{item.email}</div>); 
+
+        
+        const displayStatus = firstApproved
+          ? firstApproved.status
+          : firstDeclined
+          ? firstDeclined.status
+          : "Pending";
+  
+        const displayEmail = firstApproved
+          ? firstApproved.email
+          : firstDeclined
+          ? firstDeclined.email
+          : allPendingEmails;
+  
+        const displayComment = firstApproved?.comment || firstDeclined?.comment || "N/A";
+  
+        return (
+          <tr style={{ borderBottom: "1px solid #aeaeae" }} key={stepKey}>
+            <td style={{ padding: "8px", textAlign: "center" }}>{displayEmail}</td>
             <td style={{ padding: "8px", textAlign: "center" }}>
-              {stepData.createdAt ? fDate(stepData.createdAt) : "N/A"}
+              {firstApproved?.createdAt || firstDeclined?.createdAt || firstPending?.createdAt
+                ? fDate(firstApproved?.createdAt || firstDeclined?.createdAt || firstPending?.createdAt)
+                : "N/A"}
             </td>
             <td style={{ padding: "8px", textAlign: "center" }}>
-              {stepData.status === "Pending" ? "N/A" : fDate(stepData.updatedAt)}
+              {displayStatus === "Pending" ? "N/A" : fDate(firstApproved?.updatedAt || firstDeclined?.updatedAt)}
             </td>
-            <td style={{ padding: "8px", textAlign: "center", ...getStatusStyle(stepData.status) }}>
-              {formatStatus(stepData.status || "Pending")}
+            <td style={{ padding: "8px", textAlign: "center", ...getStatusStyle(displayStatus) }}>
+              {formatStatus(displayStatus)}
             </td>
             <td
               style={{
@@ -98,12 +165,12 @@ export default function RequestModal({ open, onClose, rowData, getRequestData })
                 whiteSpace: "nowrap",
                 textOverflow: "ellipsis",
               }}
-              title={stepData.comment}
+              title={displayComment}
             >
-              {stepData.comment ?? "N/A"}
+              {displayComment}
             </td>
           </tr>
-        ));
+        );
       });
   };
   
