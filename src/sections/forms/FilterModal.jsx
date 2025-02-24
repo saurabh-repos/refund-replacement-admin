@@ -63,9 +63,8 @@ function FilterModal({
 
   const statusData = [
     { id: 1, label: 'Pending', value: 'Pending' },
-    { id: 1, label: 'Approve', value: 'Approve' },
-    { id: 1, label: 'Decline', value: 'Decline' },
-    { id: 1, label: 'More Info', value: 'More Info' },
+    { id: 2, label: 'Approved', value: 'Approved' },
+    { id: 3, label: 'Declined', value: 'Declined' },
   ];
 
   return (
