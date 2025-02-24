@@ -222,7 +222,7 @@ export default function RequestModal({ open, onClose, rowData, getRequestData })
                   getRequestData={getRequestData}
                   id={rowData?._id}
                   data={{
-                    reqOrderNo: rowData?.reqOrderNo,
+                    replacementOrderNo: rowData?.replacementOrderNo,
                     refundRemark: rowData?.refundRemark,
                     rfmClearances: rowData?.rfmClearances,
                     refundSap: rowData?.refundSap,

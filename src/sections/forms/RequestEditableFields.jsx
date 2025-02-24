@@ -31,6 +31,8 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  console.log(data)
+
   useEffect(() => {
     if (data && !submitted) {
       setFormData(data);
