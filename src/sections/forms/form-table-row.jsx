@@ -125,8 +125,8 @@ export default function FormTableRow({
         <TableCell>{decision}</TableCell>
         <TableCell>{productCategory}</TableCell>
         <TableCell>{policyStatus}</TableCell>
-        <TableCell>{verificationVideo}</TableCell>
-        <TableCell>{technicianLastVisitDate}</TableCell>
+        <TableCell>{verificationVideo ? <a href={verificationVideo} target='_blank'>Attached File</a> : 'NA'}</TableCell>
+        <TableCell>{fDate(technicianLastVisitDate)}</TableCell>
         <TableCell style={{maxWidth:"30vw",textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap"}} title={remark}>{remark}</TableCell>
         <TableCell>{modeOfPayment}</TableCell>
         <TableCell>{beneficiaryHolder}</TableCell>
