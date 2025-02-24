@@ -59,7 +59,7 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
     setLoading(true);
     try {
       const requiredFields = [
-        'reqOrderNo',
+        'replacementOrderNo',
         'refundRemark',
         'rfmClearances',
         'refundSap',
@@ -117,8 +117,8 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
                 <TableCell style={{ minWidth: 110, fontSize: 12, textAlign: 'center' }}>
                   {editMode ? (
                     <TextField
-                      value={formData.reqOrderNo || ''}
-                      onChange={(e) => handleChange('reqOrderNo', e.target.value)}
+                      value={formData.replacementOrderNo || ''}
+                      onChange={(e) => handleChange('replacementOrderNo', e.target.value)}
                       size="small"
                       variant="outlined"
                       fullWidth
@@ -131,7 +131,7 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
                     />
                   ) : (
                     <Box sx={{ padding: '8px', fontWeight: 500 }}>
-                      {formData.reqOrderNo || 'N/A'}
+                      {formData.replacementOrderNo || 'N/A'}
                     </Box>
                   )}
                 </TableCell>

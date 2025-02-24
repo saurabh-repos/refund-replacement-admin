@@ -28,12 +28,14 @@ export default function FormTableRow({
   complainDate,
   customerName,
   purchasedFrom,
+  eflRefund,
   region,
   sbu,
   invoiceNo,
   invoiceDate,
   invoiceValue,
   category,
+  severeness,
   invoiceCopy,
   productCode,
   productName,
@@ -66,6 +68,10 @@ export default function FormTableRow({
   replacementOrderNo,
   onClick,
   tab,
+  verificationVideo,
+  technicianLastVisitDate,
+  productCategory,
+  policyStatus
 }) {
   const [open, setOpen] = useState(null);
 
@@ -96,12 +102,14 @@ export default function FormTableRow({
         <TableCell>{customerCode}</TableCell>
         <TableCell>{customerName}</TableCell>
         <TableCell>{purchasedFrom}</TableCell>
+        <TableCell>{eflRefund}</TableCell>
         <TableCell>{region}</TableCell>
         <TableCell>{sbu}</TableCell>
         <TableCell>{invoiceNo}</TableCell>
         <TableCell>{fDate(invoiceDate)}</TableCell>
         <TableCell>{invoiceValue}</TableCell>
         <TableCell>{category}</TableCell>
+        <TableCell>{severeness}</TableCell>
         <TableCell>{invoiceCopy ? <a href={invoiceCopy} target='_blank'>Attached File</a> : 'NA'}</TableCell>
         <TableCell>{productCode}</TableCell>
         <TableCell>{productName}</TableCell>
@@ -115,6 +123,10 @@ export default function FormTableRow({
         <TableCell>{reason}</TableCell>
         <TableCell>{detailsOfParts}</TableCell>
         <TableCell>{decision}</TableCell>
+        <TableCell>{productCategory}</TableCell>
+        <TableCell>{policyStatus}</TableCell>
+        <TableCell>{verificationVideo}</TableCell>
+        <TableCell>{technicianLastVisitDate}</TableCell>
         <TableCell style={{maxWidth:"30vw",textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap"}} title={remark}>{remark}</TableCell>
         <TableCell>{modeOfPayment}</TableCell>
         <TableCell>{beneficiaryHolder}</TableCell>

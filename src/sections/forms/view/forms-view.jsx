@@ -154,12 +154,18 @@ export default function FormPage() {
       label: "Customer Purchased / Ordered From",
       minWidth: 180,
     },
+    {
+      id: "eflRefund",
+      label: "Initiator Reason for Refund",
+      minWidth: 180,
+    },
     { id: "region", label: "Region", minWidth: 110 },
     { id: "sbu", label: "SBU", minWidth: 120 },
     { id: "invoiceNo", label: "Invoice No", minWidth: 140 },
     { id: "invoiceDate", label: "Invoice Date", minWidth: 150 },
     { id: "invoiceValue", label: "Invoice Value", minWidth: 150 },
     { id: "category", label: "Category", minWidth: 120 },
+    { id: "severeness", label: "Severeness", minWidth: 120 },
     { id: "invoiceCopy", label: "Attach Valid Invoice Copy", minWidth: 125 },
     { id: "productCode", label: "Product Code", minWidth: 130 },
     { id: "productName", label: "Product Name", minWidth: 130 },
@@ -187,6 +193,10 @@ export default function FormPage() {
     },
     { id: "decision", label: "Final Decision", minWidth: 140 },
     { id: "remark", label: "Remarks for Replacement Or Refund", minWidth: 200 },
+    { id: "policyStatus", label: "Policy Status", minWidth: 160 },
+    { id: "productCategory", label: "Product Category", minWidth: 160 },
+    { id: "technicianLastVisitDate", label: "Technician Last Visit", minWidth: 160 },
+    { id: "verificationVideo", label: "Verification Video", minWidth: 160 },
     { id: "modeOfPayment", label: "Refund Mode", minWidth: 150 },
     { id: "beneficiaryHolder", label: "Beneficiary Name", minWidth: 160 },
     { id: "bankName", label: "Bank Name", minWidth: 130 },
@@ -413,12 +423,14 @@ export default function FormPage() {
                           complainDate={row?.complainDate}
                           customerName={row?.customerName}
                           purchasedFrom={row?.purchasedFrom}
+                          eflRefund={row?.eflRefund}
                           region={row?.region}
                           sbu={row?.sbu}
                           invoiceNo={row?.invoiceNo}
                           invoiceDate={row?.invoiceDate}
                           invoiceValue={row?.invoiceValue}
                           category={row?.category}
+                          severeness={row?.severeness}
                           invoiceCopy={row?.invoiceCopy}
                           productCode={row?.productCode}
                           productName={row?.productName}
@@ -451,8 +463,8 @@ export default function FormPage() {
                               ? calculatePendingDays(row)
                               : "N/A"
                           }
-                          replacementOrderNo={row?.replacementOrderNo}
-                          repRetOrderNo={row?.reqOrderNo}
+                          // replacementOrderNo={row?.replacementOrderNo}
+                          repRetOrderNo={row?.replacementOrderNo}
                           refundRemarks={row?.refundRemark}
                           rfmClearance={row?.rfmClearances}
                           refundSapDoc={row?.refundSap}
@@ -462,6 +474,10 @@ export default function FormPage() {
                             setSelectedRowData(row);
                             setOpenModal(true);
                           }}
+                          verificationVideo={row?.verificationVideo}
+                          technicianLastVisitDate={row?.technicianLastVisitDate}
+                          productCategory={row?.productCategory}
+                          policyStatus={row?.policyStatus}
                         />
                     ))}
 
