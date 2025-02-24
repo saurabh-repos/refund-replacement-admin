@@ -65,9 +65,11 @@ const ReportTable = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await userRequest.get("/admin/getCharts");
+      const response = await userRequest.get(
+        `/admin/getCharts?region=${region}`
+      );
       if (response.data.success) {
-        setReportData(response.data.data.result);
+        setReportData(response.data.data.formattedData);
         setTotalPendingRequests(response.data.data.totalPendingRequests);
         setRegionCount(response.data.data.regionCount);
       }
@@ -81,8 +83,9 @@ const ReportTable = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const currentRegionData = reportData[region] || {};
+  useEffect(() => {
+    fetchData();
+  }, [region]);
 
   return (
     <Paper sx={{ p: 2, mt: 4, borderRadius: 2, width: "100%" }}>
@@ -147,7 +150,14 @@ const ReportTable = () => {
         </Button>
       </div>
       {loading ? (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "16px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "16px",
+          }}
+        >
           <CircularProgress />
         </div>
       ) : (
@@ -175,9 +185,15 @@ const ReportTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Object.keys(currentRegionData).length > 0 ? (
-                  Object.entries(currentRegionData).map(
-                    ([category, values], index) => (
+                {reportData.length > 0 ? (
+                  reportData.map((item, index) => {
+                    console.log(item)
+                    console.log(Object.keys(item))
+                    const category = Object.keys(item)[0];
+                    console.log("category",category)
+                    const values = item[category];
+
+                    return (
                       <TableRow key={index} hover>
                         <TableCell align="center">{category}</TableCell>
                         {columns.slice(1).map(({ id }) => (
@@ -186,8 +202,8 @@ const ReportTable = () => {
                           </TableCell>
                         ))}
                       </TableRow>
-                    )
-                  )
+                    );
+                  })
                 ) : (
                   <TableRow>
                     <TableCell colSpan={columns.length} align="center">

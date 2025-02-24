@@ -195,13 +195,14 @@ export default function FormPage() {
     { id: "proofDocument", label: "Bank Account Proof", minWidth: 200 },
     { id: "status", label: "Overall Status", minWidth: 140 },
     { id: "pendingWith", label: "Pending With", minWidth: 120 },
-    { id: "ifscCode", label: "Pending days", minWidth: 120 },
-    { id: "ifscCode", label: "Rep/Ret-Order No.", minWidth: 160 },
-    { id: "ifscCode", label: "Refund Remarks", minWidth: 150 },
-    { id: "ifscCode", label: "RFM-Clearance", minWidth: 140 },
-    { id: "ifscCode", label: "Refund Sap Doc", minWidth: 140 },
-    { id: "ifscCode", label: "UTR No.", minWidth: 120 },
-    { id: "ifscCode", label: "Refund Date", minWidth: 140 },
+    { id: "pendingDays", label: "Pending days", minWidth: 120 },
+    { id: "replacementOrderNo", label: "Replacement Order No.", minWidth: 140 },
+    { id: "reptNo", label: "Rep/Ret-Order No.", minWidth: 160 },
+    { id: "refundRemarks", label: "Refund Remarks", minWidth: 150 },
+    { id: "rfmClearance", label: "RFM-Clearance", minWidth: 140 },
+    { id: "refundSAPDoc", label: "Refund Sap Doc", minWidth: 140 },
+    { id: "utrNo", label: "UTR No.", minWidth: 120 },
+    { id: "refundDate", label: "Refund Date", minWidth: 140 },
   ];
 
   const params = new URLSearchParams({
@@ -450,12 +451,13 @@ export default function FormPage() {
                               ? calculatePendingDays(row)
                               : "N/A"
                           }
-                          repRetOrderNo={row.reqOrderNo}
-                          refundRemarks={row.refundRemark}
-                          rfmClearance={row.rfmClearances}
-                          refundSapDoc={row.refundSap}
-                          utrNo={row.utrNo}
-                          refundDate={row.refundDate}
+                          replacementOrderNo={row?.replacementOrderNo}
+                          repRetOrderNo={row?.reqOrderNo}
+                          refundRemarks={row?.refundRemark}
+                          rfmClearance={row?.rfmClearances}
+                          refundSapDoc={row?.refundSap}
+                          utrNo={row?.utrNo}
+                          refundDate={row?.refundDate}
                           onClick={() => {
                             setSelectedRowData(row);
                             setOpenModal(true);

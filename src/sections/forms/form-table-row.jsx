@@ -63,6 +63,7 @@ export default function FormTableRow({
   refundSapDoc,
   utrNo,
   refundDate,
+  replacementOrderNo,
   onClick,
   tab,
 }) {
@@ -124,6 +125,7 @@ export default function FormTableRow({
         <TableCell>{status}</TableCell>
         <TableCell>{pendingWith}</TableCell>
         <TableCell>{pendingDays}</TableCell>
+        <TableCell>{replacementOrderNo}</TableCell>
         <TableCell>{repRetOrderNo}</TableCell>
         <TableCell>{refundRemarks}</TableCell>
         <TableCell>{rfmClearance}</TableCell>
