@@ -31,8 +31,6 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  console.log(data)
-
   useEffect(() => {
     if (data && !submitted) {
       setFormData(data);
@@ -40,8 +38,6 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
       setRefundDate(data.refundDate ? new Date(data.refundDate) : null);
     }
   }, [data, submitted]);
-
-  console.log('formData', formData);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -62,11 +58,11 @@ export default function RequestEditableFields({ getRequestData, data, id }) {
     try {
       const requiredFields = [
         'replacementOrderNo',
-        'refundRemark',
-        'rfmClearances',
-        'refundSap',
-        'utrNo',
-        'refundDate',
+        // 'refundRemark',
+        // 'rfmClearances',
+        // 'refundSap',
+        // 'utrNo',
+        // 'refundDate',
       ];
       const missingFields = requiredFields.filter(
         (field) => !formData[field] || (field === 'refundDate' && !refundDate)

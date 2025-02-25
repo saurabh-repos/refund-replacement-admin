@@ -207,7 +207,7 @@ export default function FormPage() {
     { id: "pendingWith", label: "Pending With", minWidth: 120 },
     { id: "pendingDays", label: "Pending days", minWidth: 120 },
     // { id: "replacementOrderNo", label: "Replacement Order No.", minWidth: 140 },
-    { id: "reptNo", label: "Rep/Ret-Order No.", minWidth: 160 },
+    { id: "replacementOrderNo", label: "Rep/Ret-Order No.", minWidth: 160 },
     { id: "refundRemarks", label: "Refund Remarks", minWidth: 150 },
     { id: "rfmClearance", label: "RFM-Clearance", minWidth: 140 },
     { id: "refundSAPDoc", label: "Refund Sap Doc", minWidth: 140 },
@@ -464,7 +464,7 @@ export default function FormPage() {
                               : "N/A"
                           }
                           // replacementOrderNo={row?.replacementOrderNo}
-                          repRetOrderNo={row?.replacementOrderNo}
+                          replacementOrderNo={row?.replacementOrderNo}
                           refundRemarks={row?.refundRemark}
                           rfmClearance={row?.rfmClearances}
                           refundSapDoc={row?.refundSap}
