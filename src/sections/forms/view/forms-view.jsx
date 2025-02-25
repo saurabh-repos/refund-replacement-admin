@@ -54,6 +54,7 @@ export default function FormPage() {
 
   const getData = async () => {
     try {
+      setLoading(true)
       const res = await userRequest.get("/admin/getForms", {
         params: {
           page: page + 1,
@@ -284,16 +285,80 @@ export default function FormPage() {
   //   return pendingDays;
   // };
 
+  // const calculatePendingDays = (data) => {
+  //   console.log(data)
+  //   if (!data || !data.requestDetails) {
+  //     return "N/A";
+  //   }
+
+  //   const currentDate = new Date();
+  //   const steps = data.requestDetails;
+  //   let lastApprovedStep = -1;
+  //   let oldestPendingDate = null;
+
+  //   // Identify the last approved step
+  //   Object.keys(steps)
+  //     .filter((key) => key.startsWith("step"))
+  //     .sort(
+  //       (a, b) =>
+  //         parseInt(a.replace("step", ""), 10) -
+  //         parseInt(b.replace("step", ""), 10)
+  //     )
+  //     .forEach((stepKey) => {
+  //       const stepData = steps[stepKey];
+
+  //       if (stepData.some((item) => item.status === "Approved")) {
+  //         lastApprovedStep = parseInt(stepKey.replace("step", ""), 10);
+  //       }
+  //     });
+
+  //   // Find the earliest pending step AFTER the last approved step
+  //   Object.keys(steps)
+  //     .filter((key) => key.startsWith("step"))
+  //     .sort(
+  //       (a, b) =>
+  //         parseInt(a.replace("step", ""), 10) -
+  //         parseInt(b.replace("step", ""), 10)
+  //     )
+  //     .forEach((stepKey) => {
+  //       const stepNumber = parseInt(stepKey.replace("step", ""), 10);
+  //       const stepData = steps[stepKey];
+
+  //       // Skip steps that were approved already
+  //       if (stepNumber <= lastApprovedStep) {
+  //         return;
+  //       }
+
+  //       stepData.forEach((item) => {
+  //         if (item.status === "Pending") {
+  //           const stepDate = new Date(item.createdAt);
+  //           if (!oldestPendingDate || stepDate < oldestPendingDate) {
+  //             oldestPendingDate = stepDate;
+  //           }
+  //         }
+  //       });
+  //     });
+
+  //   // Calculate pending days
+  //   if (oldestPendingDate) {
+  //     return Math.floor(
+  //       (currentDate - oldestPendingDate) / (1000 * 60 * 60 * 24)
+  //     );
+  //   }
+
+  //   return "N/A";
+  // };
+
   const calculatePendingDays = (data) => {
     if (!data || !data.requestDetails) {
       return "N/A";
     }
-
+  
     const currentDate = new Date();
     const steps = data.requestDetails;
     let lastApprovedStep = -1;
     let oldestPendingDate = null;
-
+  
     // Identify the last approved step
     Object.keys(steps)
       .filter((key) => key.startsWith("step"))
@@ -304,12 +369,12 @@ export default function FormPage() {
       )
       .forEach((stepKey) => {
         const stepData = steps[stepKey];
-
+  
         if (stepData.some((item) => item.status === "Approved")) {
           lastApprovedStep = parseInt(stepKey.replace("step", ""), 10);
         }
       });
-
+  
     // Find the earliest pending step AFTER the last approved step
     Object.keys(steps)
       .filter((key) => key.startsWith("step"))
@@ -321,12 +386,12 @@ export default function FormPage() {
       .forEach((stepKey) => {
         const stepNumber = parseInt(stepKey.replace("step", ""), 10);
         const stepData = steps[stepKey];
-
+  
         // Skip steps that were approved already
         if (stepNumber <= lastApprovedStep) {
           return;
         }
-
+  
         stepData.forEach((item) => {
           if (item.status === "Pending") {
             const stepDate = new Date(item.createdAt);
@@ -336,17 +401,17 @@ export default function FormPage() {
           }
         });
       });
-
+  
     // Calculate pending days
     if (oldestPendingDate) {
       return Math.floor(
         (currentDate - oldestPendingDate) / (1000 * 60 * 60 * 24)
       );
     }
-
+  
     return "N/A";
   };
-
+  
   return (
     <Container>
       <Card>

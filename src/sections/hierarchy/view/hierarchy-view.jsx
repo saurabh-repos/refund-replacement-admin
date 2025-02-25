@@ -47,6 +47,7 @@ export default function HierarchyView() {
 
   const getData = async () => {
     try {
+      setLoading(true)
       const res = await userRequest.get('/admin/getHierarchies', {
         params: {
           page: page + 1,
