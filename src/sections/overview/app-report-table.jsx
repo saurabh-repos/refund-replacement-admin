@@ -156,6 +156,7 @@ const ReportTable = () => {
             justifyContent: "center",
             alignItems: "center",
             padding: "16px",
+            height:"60dvh"
           }}
         >
           <CircularProgress />
@@ -190,7 +191,6 @@ const ReportTable = () => {
                     console.log(item)
                     console.log(Object.keys(item))
                     const category = Object.keys(item)[0];
-                    console.log("category",category)
                     const values = item[category];
 
                     return (
@@ -205,7 +205,7 @@ const ReportTable = () => {
                     );
                   })
                 ) : (
-                  <TableRow>
+                  <TableRow sx={{height:"60dvh"}}>
                     <TableCell colSpan={columns.length} align="center">
                       No data available for the selected region.
                     </TableCell>
