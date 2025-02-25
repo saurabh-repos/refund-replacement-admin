@@ -119,14 +119,15 @@ export default function FormTableRow({
         <TableCell>{tds}</TableCell>
         <TableCell>{bpNameCode}</TableCell>
         <TableCell>{waterPressure}</TableCell>
-        <TableCell>{waterPressure}</TableCell>
+        <TableCell>{complainHistory}</TableCell>
         <TableCell>{reason}</TableCell>
         <TableCell>{detailsOfParts}</TableCell>
         <TableCell>{decision}</TableCell>
-        <TableCell>{productCategory}</TableCell>
+        <TableCell>{remark}</TableCell>
         <TableCell>{policyStatus}</TableCell>
-        <TableCell>{verificationVideo ? <a href={verificationVideo} target='_blank'>Attached File</a> : 'NA'}</TableCell>
+        <TableCell>{productCategory}</TableCell>
         <TableCell>{fDate(technicianLastVisitDate)}</TableCell>
+        <TableCell>{verificationVideo ? <a href={verificationVideo} target='_blank'>Attached File</a> : 'NA'}</TableCell>
         <TableCell style={{maxWidth:"30vw",textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap"}} title={remark}>{remark}</TableCell>
         <TableCell>{modeOfPayment}</TableCell>
         <TableCell>{beneficiaryHolder}</TableCell>
@@ -138,7 +139,6 @@ export default function FormTableRow({
         <TableCell>{pendingWith}</TableCell>
         <TableCell>{pendingDays}</TableCell>
         <TableCell>{replacementOrderNo}</TableCell>
-        <TableCell>{repRetOrderNo}</TableCell>
         <TableCell>{refundRemarks}</TableCell>
         <TableCell>{rfmClearance}</TableCell>
         <TableCell>{refundSapDoc}</TableCell>
