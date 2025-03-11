@@ -35,7 +35,7 @@ const columns = [
 ];
 
 const ReportTable = () => {
-  const [region, setRegion] = useState("South");
+  const [region, setRegion] = useState("NORTH");
   const [reportData, setReportData] = useState({});
   const [totalPendingRequests, setTotalPendingRequests] = useState(0);
   const [regionCount, setRegionCount] = useState({});
@@ -227,7 +227,7 @@ const ReportTable = () => {
             <span style={{ color: "#1777ED" }}>
               North:{" "}
               <strong style={{ color: "#000" }}>
-                {regionCount.North || 0}
+                {regionCount.NORTH || 0}
               </strong>
             </span>{" "}
             |
@@ -235,20 +235,20 @@ const ReportTable = () => {
               {" "}
               South:{" "}
               <strong style={{ color: "#000" }}>
-                {regionCount.South || 0}
+                {regionCount.SOUTH || 0}
               </strong>
             </span>{" "}
             |
             <span style={{ color: "#FFC107" }}>
               {" "}
               East:{" "}
-              <strong style={{ color: "#000" }}>{regionCount.East || 0}</strong>
+              <strong style={{ color: "#000" }}>{regionCount.EAST || 0}</strong>
             </span>{" "}
             |
             <span style={{ color: "#DC3545" }}>
               {" "}
               West:{" "}
-              <strong style={{ color: "#000" }}>{regionCount.West || 0}</strong>
+              <strong style={{ color: "#000" }}>{regionCount.WEST || 0}</strong>
             </span>
           </div>
         </>
