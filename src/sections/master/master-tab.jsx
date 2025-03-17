@@ -1,14 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import React from "react";
 
-function MasterTabs({ selectedTab, setSelectedTab }) {
-  const menuItems = [
-    "Category",
-    "Region",
-    "Product Category",
-    "Reason",
-    "Product Status",
-  ];
+function MasterTabs({ selectedTab, setSelectedTab ,menuItems}) {
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
       <Tabs
