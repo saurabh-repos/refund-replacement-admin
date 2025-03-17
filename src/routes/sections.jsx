@@ -7,6 +7,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 import Hierarchy from 'src/pages/hierarchy';
 import FormsPage from 'src/pages/requests';
 import { UsersView } from 'src/sections/users/view';
+import { MasterView } from 'src/sections/master/view';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const LoginPage = lazy(() => import('src/pages/login'));
@@ -46,6 +47,14 @@ export default function Router() {
                 element: (
                   <AdminRoute>
                     <UsersView />
+                  </AdminRoute>
+                ),
+              },
+              {
+                path: '/master',
+                element: (
+                  <AdminRoute>
+                    <MasterView />
                   </AdminRoute>
                 ),
               },

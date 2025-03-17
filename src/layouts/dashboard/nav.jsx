@@ -49,6 +49,11 @@ export default function Nav({ openNav, onCloseNav, collapsed, setCollapsed }) {
             path: '/admins',
             icon: icon('ic_lock'),
           },
+          {
+            title: 'Master Data',
+            path: '/master',
+            icon: icon('ic_lock'),
+          },
         ]
       : navConfig;
 
